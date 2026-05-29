@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CV Guide</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+<style>
+.info-container{
+    display:flex;
+    max-width:1300px;
+    margin:40px auto;
+    gap:30px;
+    padding:20px;
+}
+
+.left-menu{
+    width:28%;
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+.topic-card{
+    background:white;
+    padding:18px;
+    border-radius:15px;
+    cursor:pointer;
+    box-shadow:0 5px 15px rgba(0,0,0,0.08);
+    transition:.3s;
+    border-left:5px solid #6c63ff;
+}
+
+.topic-card:hover,
+.topic-card.active{
+    transform:translateX(8px);
+    background:linear-gradient(90deg,#6c63ff,#00b4d8);
+    color:white;
+}
+
+.right-content{
+    width:72%;
+    background:white;
+    padding:35px;
+    border-radius:18px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.08);
+    min-height:600px;
+}
+
+.content-box{
+    display:none;
+    animation:fade .4s ease;
+}
+
+.content-box.active{
+    display:block;
+}
+
+.content-box h2{
+    margin-bottom:18px;
+    color:#333;
+    border-bottom:2px solid #6c63ff;
+    padding-bottom:8px;
+}
+
+.content-box p,
+.content-box li{
+    line-height:1.8;
+    color:#555;
+}
+
+.content-box ul{
+    padding-left:20px;
+}
+
+@keyframes fade{
+    from{opacity:0;transform:translateY(20px);}
+    to{opacity:1;transform:translateY(0);}
+}
+
+@media(max-width:900px){
+    .info-container{
+        flex-direction:column;
+    }
+
+    .left-menu,
+    .right-content{
+        width:100%;
+    }
+}
+
+/* =========================
+   MOBILE PHONES
+========================= */
+
+@media(max-width:768px){
+
+    .info-container{
+        padding:15px;
+        gap:20px;
+    }
+
+    .left-menu{
+        gap:12px;
+    }
+
+    .topic-card{
+        padding:15px;
+        font-size:15px;
+    }
+
+    .right-content{
+        padding:20px;
+        min-height:auto;
+    }
+
+    .content-box h2{
+        font-size:24px;
+    }
+
+    .content-box p,
+    .content-box li{
+        font-size:15px;
+        line-height:1.7;
+    }
+}
+
+
+/* =========================
+   SMALL MOBILE DEVICES
+========================= */
+
+@media(max-width:480px){
+
+    .info-container{
+        padding:10px;
+    }
+
+    .topic-card{
+        padding:12px;
+        font-size:14px;
+        border-radius:12px;
+    }
+
+    .right-content{
+        padding:15px;
+        border-radius:14px;
+    }
+
+    .content-box h2{
+        font-size:20px;
+    }
+
+    .content-box p,
+    .content-box li{
+        font-size:14px;
+    }
+}
+
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo">
+        <h2>RESUME MAKER</h2>
+    </div>
+
+    <div class="menutoggle" onclick="toggleMenu()">
+    ☰
+    </div>
+
+    <div class="nav-links" id="nav-links">
+        <ul>
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('resume_info') }}">Resume</a></li>
+            <li><a href="{{ url_for('cv_info') }}">CV</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="info-container">
+
+<!-- LEFT MENU -->
+<div class="left-menu">
+
+<div class="topic-card active" onclick="showContent(0)">What is CV?</div>
+
+<div class="topic-card" onclick="showContent(1)">CV Structure</div>
+
+<div class="topic-card" onclick="showContent(2)">Academic CV</div>
+
+<div class="topic-card" onclick="showContent(3)">Professional CV Tips</div>
+
+<div class="topic-card" onclick="showContent(4)">Common CV Mistakes</div>
+
+<div class="topic-card" onclick="showContent(5)">Why CV Matters?</div>
+
+</div>
+
+<!-- RIGHT CONTENT -->
+<div class="right-content">
+
+<div class="content-box active">
+<h2>What is CV?</h2>
+<p>
+CV (Curriculum Vitae) is a detailed professional document
+showing education, projects, research, experience,
+publications, certifications and academic achievements.
+</p>
+</div>
+
+<div class="content-box">
+<h2>CV Structure</h2>
+<ul>
+<li>Personal Information</li>
+<li>Professional Summary</li>
+<li>Education Details</li>
+<li>Projects & Research</li>
+<li>Experience</li>
+<li>Publications</li>
+<li>Skills & Certifications</li>
+<li>References</li>
+</ul>
+</div>
+
+<div class="content-box">
+<h2>Academic CV</h2>
+<p>
+Academic CV focuses on research work,
+publications, conferences, workshops,
+teaching experience and academic awards.
+</p>
+</div>
+
+<div class="content-box">
+<h2>Professional CV Tips</h2>
+<ul>
+<li>Use formal formatting</li>
+<li>Highlight achievements clearly</li>
+<li>Add publications properly</li>
+<li>Keep sections organized</li>
+<li>Maintain accuracy</li>
+</ul>
+</div>
+
+<div class="content-box">
+<h2>Common CV Mistakes</h2>
+<ul>
+<li>Unorganized sections</li>
+<li>Too much unnecessary data</li>
+<li>Formatting inconsistency</li>
+<li>Missing references</li>
+<li>Grammar mistakes</li>
+</ul>
+</div>
+
+<div class="content-box">
+<h2>Why CV Matters?</h2>
+<p>
+CV is essential for academic admissions,
+higher studies, research jobs and
+professional career opportunities.
+A strong CV creates credibility.
+</p>
+</div>
+
+</div>
+</div>
+
+<script>
+
+function toggleMenu(){
+    let menu=document.getElementById("nav-links");
+    menu.classList.toggle("show");
+}
+
+
+function showContent(index){
+
+let cards=document.querySelectorAll('.topic-card');
+let content=document.querySelectorAll('.content-box');
+
+cards.forEach(card=>card.classList.remove('active'));
+content.forEach(box=>box.classList.remove('active'));
+
+cards[index].classList.add('active');
+content[index].classList.add('active');
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Maker</title>
+
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<!-- 🔥 NAVBAR (moved to top only) -->
+<nav class="navbar">
+    <div class="logo">
+        <h2>RESUME MAKER</h2>   
+    </div>
+
+    <div class="menutoggle" onclick="toggleMenu()">
+        ☰
+    </div>
+
+    <div class="nav-links" id="nav-links">
+    <ul>
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+        <li><a href="{{ url_for('resume_info') }}">Resume</a></li>
+        <li><a href="{{ url_for('cv_info') }}">CV</a></li>
+    </ul>
+    </div>
+</nav>
+
+
+
+
+
+<!-- 🔥 HERO SECTION -->
+<div class="main-container">
+
+    <!-- LEFT (your images only styled) -->
+    <div class="left-container">
+        <img src="{{ url_for('static', filename='resume.png') }}" class="img1">
+        <img src="{{ url_for('static', filename='resume1.png') }}" class="img2">
+        <img src="{{ url_for('static', filename='resume2.png') }}" class="img3">
+    </div>
+
+    <!-- RIGHT (your content SAME) -->
+    <div class="right-container">
+
+        <h1><u>RESUME MAKER</u></h1>
+        <p>Welcome to the Resume Maker! This tool will help you create a professional resume in just a few steps. Click the button below to get started.</p>
+
+        <h2>The Best Online Resume Builder</h2>
+        <p>Create a resume easily with our platform.</p>
+
+        <div class="button">
+            <button class="btn-primary" onclick="window.location.href='index.html'">Create Your Resume</button>
+            <button class="btn-secondary" onclick="window.location.href='cv.html'">Create Your CV</button>
+        </div>
+
+        <div class="states">
+            <h3>↑ 30% higher chance of getting a job‡</h3>
+            <h3>↑ 42% higher response rate from recruiters‡</h3>
+            <h3>↑ 20% more likely to get an interview‡</h3>
+        </div>
+
+    </div>
+    
+</div>
+<section class="features">
+
+<h2>Why Choose Resume Maker?</h2>
+
+<div class="grid">
+
+<div class="box">
+<h3>ATS Friendly</h3>
+<p>Pass recruiter software scans easily.</p>
+</div>
+
+<div class="box">
+<h3>Professional Templates</h3>
+<p>Modern clean resume designs.</p>
+</div>
+
+<div class="box">
+<h3>Fast Builder</h3>
+<p>Create resume within minutes.</p>
+</div>
+
+<div class="box">
+<h3>Free Download</h3>
+<p>Print and save instantly.</p>
+</div>
+
+</div>
+
+</section>
+
+
+<script>
+    
+function toggleMenu() {
+    let menu =
+document.getElementById("nav-links");
+    menu.classList.toggle("show");
+}
+
+</script>
+
+</body>
+</html>

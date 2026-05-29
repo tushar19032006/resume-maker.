@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <title>RESUME MAKER</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .container {
+            background-color: #b8ba24;
+            text-align: center;
+            padding: 50px;
+        }
+
+        .main-container {
+            background-color: #d61111;
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+        }
+
+        .button{
+            background-color: #904caf;
+            color: Purple;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        .rules{
+            background-color: #a2a91d;
+            color: Purple;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="container">
+    <h1>RESUME MAKER</h1>
+    <p>Welcome to the Resume Maker! This tool will help you create a professional resume in just a few steps. Click the button below to get started.</p>
+    </div>
+    <div class="main-container">
+    
+        <div class="rules-container">
+        <div class="rules">
+        <h3>RULES </h3>
+        </div>
+    <ul>
+        <li>Use a clean, professional font.</li>
+        <li>Keep it to one page if possible.</li>
+        <li>Use bullet points to highlight achievements.</li>
+        <li>Customize the resume for each job application.</li>
+    </ul>
+    </div>
+    <div class="button-container">
+        <button onclick="window.location.href='index.html'">(+) <br> Create Your Resume</button>
+        <br><br>
+        <button onclick="window.location.href='cv.html'">(+) <br> Create Your CV</button>
+    </div>
+    <div class="rules1-container">
+    <h3>How to Develope a Impresssive Resume</h3>
+    <ul>
+        <li>Start with a clear and concise objective statement.</li>
+        <li>Highlight your most relevant skills and experiences.</li>
+        <li>Use specific examples to demonstrate your achievements.</li>
+        <li>Proofread carefully to avoid any typos or grammatical errors.</li>
+    </ul>
+    </div>
+    </div>
+</body>
+</html>

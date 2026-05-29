@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CV Form</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- ✅ Flask CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        body{
+            background:#eef2f8;
+            font-family:Arial,sans-serif;
+        }
+
+        .form-container{
+            max-width:900px;
+            margin:auto;
+            background:white;
+            padding:35px;
+            border-radius:25px;
+            box-shadow:0 15px 40px rgba(0,0,0,0.08);
+            border-top:8px solid #6c3df4;
+        }
+
+        h2{
+            text-align:center;
+            font-size:55px;
+            color:#4b21a8;
+            margin-bottom:30px;
+        }
+
+
+        .step{
+            display:none;
+            animation:fade .4s ease;
+            background:#f7f3ff;
+            padding:40px;
+            border-radius:25px;
+            border-left:8px solid #6c3df4;
+            box-shadow:0 8px 20px rgba(108,61,244,0.08);
+        }
+
+        .step.active{
+            display:block;
+        }
+
+        @keyframes fade{
+            from{opacity:0;transform:translateY(20px);}
+            to{opacity:1;transform:translateY(0);}
+        }
+
+        input,textarea{
+            width:100%;
+            padding:14px;
+            margin:8px 0;
+            border:2px solid #99f6e4;
+            border-radius:16px;
+            font-size:15px;
+            transition:.3s;
+            outline:none;
+        }
+
+        input:focus,textarea:focus{
+            border-color:#0f766e;
+            box-shadow:0 18px 40px rgba(15,118,110,0.12);
+            outline:none;
+        }
+
+
+        .progress-bar{
+            width:100%;
+            height:14px;
+            background:#e6e1f7;
+            border-radius:30px;
+            margin:25px 0 35px;
+            overflow:hidden;
+        }
+
+        .progress{
+            height:100%;
+            width:0;
+            border-radius:30px;
+            background:linear-gradient(90deg,#0f766e,#14b8a6);
+            transition:.4s;
+        }
+
+        button{
+            padding:15px 35px;
+            border:none;
+            border-radius:14px;
+            font-size:18px;
+            font-weight:bold;
+            cursor:pointer;
+            color:white;
+            transition:.3s;
+        }
+
+        .next-btn{
+            background:linear-gradient(90deg,#0f766e,#14b8a6);
+        }
+
+        .prev-btn,.back-btn{
+            background:#64748b;
+        }
+
+
+        button:hover{
+            transform:translateY(-3px);
+            box-shadow:0 8px 20px rgba(0,0,0,.12);
+        }
+
+        .nav-btns{
+            display:flex;
+            justify-content:space-between;
+            margin-top:30px;
+        }
+
+        /* =========================
+        TABLET RESPONSIVE
+        ========================= */
+        @media(max-width:992px){
+
+            .form-container{
+                margin:20px;
+                padding:25px;
+            }
+
+            h2{
+                font-size:42px;
+            }
+
+            .step{
+                padding:30px 25px;
+            }
+
+            button{
+                font-size:16px;
+                padding:14px 28px;
+            }
+        }
+
+        /* =========================
+        MOBILE RESPONSIVE
+        ========================= */
+        @media(max-width:768px){
+
+            body{
+                padding:10px;
+            }
+
+            .form-container{
+                width:100%;
+                margin:10px auto;
+                padding:18px;
+                border-radius:18px;
+            }
+
+            h2{
+                font-size:30px;
+                margin-bottom:20px;
+            }
+
+            h3{
+                font-size:22px;
+            }
+
+            .step{
+                padding:20px 15px;
+                border-radius:18px;
+            }
+
+            input,
+            textarea{
+                width:100%;
+                padding:12px;
+                font-size:14px;
+                border-radius:12px;
+                box-sizing:border-box;
+            }
+
+            textarea{
+                min-height:110px;
+            }
+
+            .progress-bar{
+                height:12px;
+                margin:20px 0 25px;
+            }
+
+            .nav-btns{
+                flex-direction:column;
+                gap:12px;
+            }
+
+            button{
+                width:100%;
+                font-size:15px;
+                padding:14px;
+            }
+
+            img{
+                width:100px !important;
+                height:100px !important;
+            }
+
+            p{
+                font-size:14px;
+                line-height:1.6;
+            }
+        }
+
+        /* =========================
+        SMALL MOBILE
+        ========================= */
+        @media(max-width:480px){
+
+            .form-container{
+                padding:14px;
+            }
+
+            h2{
+                font-size:24px;
+            }
+
+            h3{
+                font-size:20px;
+            }
+
+            .step{
+                padding:16px 12px;
+            }
+
+            input,
+            textarea{
+                font-size:13px;
+                padding:10px;
+            }
+
+            button{
+                font-size:14px;
+                padding:12px;
+            }
+
+            p{
+                font-size:13px;
+            }
+
+            img{
+                width:85px !important;
+                height:85px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+
+<h2>Curriculum Vitae (CV)</h2>
+    
+<div class="progress-bar">
+    <div class="progress" id="progress">
+    </div>
+</div>
+
+<form action="/generate/cv" method="POST" enctype="multipart/form-data">
+
+<div class="step active">
+    <h3>Personal Details</h3>
+    <input type="text" name="name" value="{{ data.get('name','') if data else '' }}" placeholder="Full Name" required>
+    <input type="email" name="email" value="{{ data.get('email','') if data else '' }}" placeholder="Email" required>
+    <input type="text" name="phone" value="{{ data.get('phone','') if data else '' }}" placeholder="Phone" required>
+    <input type="text" name="address" value="{{ data.get('address','') if data else '' }}" placeholder="Address">
+    <input type="text" name="linkedin" value="{{ data.get('linkedin','') if data else '' }}" placeholder="LinkedIn Profile">
+    <input type="text" name="github" value="{{ data.get('github','') if data else '' }}" placeholder="GitHub Profile">
+    <hr>
+
+     <label>Upload Profile Photo</label>
+
+    <input type="file"
+        name="photo"
+        accept="image/*">
+
+    <input type="hidden"
+        name="existing_photo"
+        value="{{ data.get('photo','') if data else '' }}">
+
+    {% if data and data.get('photo') %}
+
+    <img src="/{{ data.get('photo') }}"
+        width="120"
+        height="120"
+        style="
+            border-radius:50%;
+            object-fit:cover;
+            margin-top:10px;
+            border:3px solid #ff7a18;
+    ">
+
+    {% endif %}
+
+    <div class="nav-btns">
+        <button type="button" class="back-btn" onclick="window.location.href='/'">Back</button>
+        <button type="button" class="next-btn" onclick="nextStep()">Next</button>
+    </div>
+</div>
+
+<div class="step">
+    <h3>Professional Summary</h3>
+    <textarea name="objective" placeholder="Write your professional summary...">{{ data.get('objective','') if data else '' }}</textarea>
+    <hr>
+
+    <div class="nav-btns">
+        <button type="button" class="prev-btn" onclick="prevStep()">Back</button>
+        <button type="button" class="next-btn" onclick="nextStep()">Next</button>
+    </div>
+</div>
+
+<div class="step">
+    <!-- 🔥 Dynamic Education -->
+    <h3>Education</h3>
+    <div id="education-section">
+        <input type="text" name="degree1" value="{{ data.get('degree1','') if data else '' }}" placeholder="Degree">
+        <input type="text" name="college1" value="{{ data.get('college1','') if data else '' }}" placeholder="College">
+        <input type="text" name="grad_year1" value="{{ data.get('grad_year1','') if data else '' }}" placeholder="Year">
+        <input type="text" name="percentage1" value="{{ data.get('percentage1','') if data else '' }}" placeholder="Percentage">
+        <input type="text" name="edu_duration1" value="{{ data.get('edu_duration1','') if data else '' }}" placeholder="Duration">
+    </div>
+    <button type="button" onclick="addEducation()">Add Education</button>
+    <hr>
+
+    <div class="nav-btns">
+        <button type="button" class="prev-btn" onclick="prevStep()">Back</button>
+        <button type="button" class="next-btn" onclick="nextStep()">Next</button>
+    </div>
+</div>
+
+<div class="step">
+    <h3>Research Work/Thesis</h3><br>
+    <p>Research topic or Thesis title</p>
+    <textarea name="research" placeholder="Describe your research work or thesis...">{{ data.get('research','') if data else '' }}</textarea>
+    <hr>
+
+    <div class="nav-btns">
+        <button type="button" class="prev-btn" onclick="prevStep()">Back</button>
+        <button type="button" class="next-btn" onclick="nextStep()">Next</button>
+    </div>
+</div>
+
+<div class="step">
+    <h3>Projects</h3>
+    <div id="project-section">
+        <input type="text" name="project1" value="{{ data.get('project1','') if data else '' }}" placeholder="Project">
+        <textarea name="project_desc1" placeholder="Description">{{ data.get('project_desc1','') if data else '' }}</textarea>
+        <input type="text" name="project_tech1" value="{{ data.get('project_tech1','') if data else '' }}" placeholder="Technologies Used">
+        <input type="text" name="project_link1" value="{{ data.get('project_link1','') if data else '' }}" placeholder="Project Link">
+    </div>
+    <button type="button" onclick="addProject()">Add More Project</button>
+    <hr>
+
+    <div class="nav-btns">
+        <button type="button" class="prev-btn" onclick="prevStep()">Back</button>
+        <button type="button" class="next-btn" onclick="nextStep()">Next</button>
+    </div>
+</div>
+
+<div class="step">
+    <h3>Publicationa</h3><br>
+    <p>Any paper or article have you published,journal,magzines, conferences,etc</p>
+    <textarea name="publications" placeholder="List your publications...">{{ data.get('publications','') if data else '' }}</textarea>
+    <hr>
+
+    <div class="nav-btns">
+        <button type="button" class="prev-btn" onclick="prevStep()">Back</button>
+        <button type="button" class="next-btn" onclick="nextStep()">Next</button>
+    </div>
+</div>
+
+<div class="step">
+    <h3>Work Experience</h3>
+    <div id="experience-section">
+        <input type="text" name="job_title1" value="{{ data.get('job_title1','') if data else '' }}" placeholder="Job Title">
+        <input type="text" name="company1" value="{{ data.get('company1','') if data else '' }}" placeholder="Company">
+        <input type="text" name="duration1" value="{{ data.get('duration1','') if data else '' }}" placeholder="Duration">
+        <textarea name="description1" placeholder="Description">{{ data.get('description1','') if data else '' }}</textarea>
+    </div>
+    <hr>
+
+    <button type="button" onclick="addExperience()">Add More Experience</button>
+    <hr>
+
+    <div class="nav-btns">
+        <button type="button" class="prev-btn" onclick="prevStep()">Back</button>
+        <button type="button" class="next-btn" onclick="nextStep()">Next</button>
+    </div>
+</div>
+
+<div class="step">
+    <h3>Skills</h3>
+    <input type="text" name="skills1" value="{{ data.get('skills1','') if data else '' }}" placeholder="Technical Skills">
+    <input type="text" name="skills_soft1" value="{{ data.get('skills_soft1','') if data else '' }}" placeholder="Soft Skills">
+    <hr>
+
+    <div class="nav-btns">
+        <button type="button" class="prev-btn" onclick="prevStep()">Back</button>
+        <button type="button" class="next-btn" onclick="nextStep()">Next</button>
+    </div>
+</div>
+
+<div class="step">
+    <h3>Certifications</h3>
+    <div id="certification-section">
+    <input type="text" name="certification1" value="{{ data.get('certification1','') if data else '' }}" placeholder="Certification Name">
+    <input type="text" name="cert_org1" value="{{ data.get('cert_org1','') if data else '' }}" placeholder="Issuing Organization">
+    <input type="text" name="cert_date1" value="{{ data.get('cert_date1','') if data else '' }}" placeholder="Date Obtained">
+    <hr>
+    </div>
+
+    <button type="button" onclick="addCert()">Add More Certificates</button>
+    <hr>
+
+    <h3>Awards & Achievements</h3>
+    <input type="text" name="award1" value="{{ data.get('award1','') if data else '' }}" placeholder="Award Name">
+    <input type="text" name="award_org1" value="{{ data.get('award_org1','') if data else '' }}" placeholder="Issuing Organization">
+    <input type="text" name="award_date1" value="{{ data.get('award_date1','') if data else '' }}" placeholder="Date Obtained">
+    <hr>
+    <input type="text" name="achievement1" value="{{ data.get('achievement1','') if data else '' }}" placeholder="Achievement">
+    <hr>
+
+    <h3>Languages</h3>
+    <input type="text" name="languages" value="{{ data.get('languages','') if data else '' }}" placeholder="Languages">
+    <hr>
+
+    <div class="nav-btns">
+        <button type="button" class="prev-btn" onclick="prevStep()">Back</button>
+        <button type="button" class="next-btn" onclick="nextStep()">Next</button>
+    </div>   
+</div>
+
+<div class="step">
+    <h3>Conferences & Workshops</h3><br>
+    <p>Any conference, workshop or seminar have you attended or presented in</p>
+    <textarea name="conferences" placeholder="List conferences and workshops...">{{ data.get('conferences','') if data else '' }}</textarea>
+    <hr>
+
+    <div class="nav-btns">
+        <button type="button" class="prev-btn" onclick="prevStep()">Back</button>
+        <button type="button" class="next-btn" onclick="nextStep()">Next</button>
+    </div>
+</div>
+
+<div class="step">
+    <h3>References</h3><br>
+    <p>List 2-3 professional references with their contact information</p>
+    <textarea name="references" placeholder="List your references...">{{ data.get('references','') if data else '' }}</textarea>
+    <hr>
+
+    <div class="nav-btns">
+        <button type="button" class="prev-btn" onclick="prevStep()">Back</button>
+        <button type="submit" class="next-btn">Generate CV</button>
+    </div>
+</div>
+
+</form>
+
+
+</div>
+
+<script>
+let eduCount = 2;
+let projectCount = 2;
+let expCount = 2;
+let certCount = 2;
+
+function addEducation() {
+    let container = document.getElementById("education-section");
+
+    let html = `
+        <input type="text" name="degree${eduCount}" placeholder="Degree">
+        <input type="text" name="college${eduCount}" placeholder="College">
+        <input type="text" name="grad_year${eduCount}" placeholder="Year">
+        <input type="text" name="percentage${eduCount}" placeholder="Percentage">
+        <input type="text" name="edu_duration${eduCount}" placeholder="Duration">
+        <hr>
+    `;
+
+    container.insertAdjacentHTML("beforeend", html);
+    eduCount++;
+}
+
+function addProject() {
+    let container = document.getElementById("project-section");
+
+    let html = `
+        <input type="text" name="project${projectCount}" placeholder="Project">
+        <textarea name="project_desc${projectCount}" placeholder="Description"></textarea>
+        <input type="text" name="project_tech${projectCount}" placeholder="Technologies Used">
+        <input type="text" name="project_link${projectCount}" placeholder="Project Link">
+        <hr>
+    `;
+
+    container.insertAdjacentHTML("beforeend", html);
+    projectCount++;
+}
+
+function addExperience() {
+    let container = document.getElementById("experience-section");
+
+    let html = `
+        <input type="text" name="job_title${expCount}" placeholder="Job Title">
+        <input type="text" name="company${expCount}" placeholder="Company">
+        <input type="text" name="duration${expCount}" placeholder="Duration">
+        <textarea name="description${expCount}" placeholder="Description"></textarea>
+        <hr>
+    `;
+
+    container.insertAdjacentHTML("beforeend", html);
+    expCount++;
+}
+
+function addCert() {
+    let container = document.getElementById("certification-section");
+
+    let html = `
+        <input type="text" name="certification${certCount}" placeholder="Certification Name">
+        <input type="text" name="cert_org${certCount}" placeholder="Issuing Organization">
+        <input type="text" name="cert_date${certCount}" placeholder="Date Obtained">
+        <hr>
+    `;
+
+    container.insertAdjacentHTML("beforeend", html);
+    certCount++;
+}
+
+let currentStep = 0;
+const steps = document.querySelectorAll(".step");
+const progress = document.getElementById("progress");
+
+function showStep(index) {
+    steps.forEach((step, i) => {
+        step.classList.toggle("active", i === index);
+    });
+
+    let percent = ((index + 1) / steps.length) * 100;
+    progress.style.width = percent + "%";
+}
+
+function nextStep() {
+    if (currentStep < steps.length - 1) {
+        currentStep++;
+        showStep(currentStep);
+    }
+}
+
+function prevStep() {
+    if (currentStep > 0) {
+        currentStep--;
+        showStep(currentStep);
+    }
+}
+
+showStep(currentStep);
+
+function nextStep() {
+    const current = steps[currentStep];
+    const inputs = current.querySelectorAll("input, textarea");
+
+    for (let input of inputs) {
+        if (!input.checkValidity()) {
+            input.reportValidity(); // shows browser error
+            return; // STOP going next
+        }
+    }
+
+    if (currentStep < steps.length - 1) {
+        currentStep++;
+        showStep(currentStep);
+    }
+}
+
+window.onload = function () {
+
+{% if data %}
+
+{% for i in range(2,20) %}
+{% if data.get('degree' ~ i) %}
+addEducation();
+document.getElementsByName("degree{{i}}")[0].value="{{ data.get('degree' ~ i,'') }}";
+document.getElementsByName("college{{i}}")[0].value="{{ data.get('college' ~ i,'') }}";
+document.getElementsByName("grad_year{{i}}")[0].value="{{ data.get('grad_year' ~ i,'') }}";
+document.getElementsByName("percentage{{i}}")[0].value="{{ data.get('percentage' ~ i,'') }}";
+document.getElementsByName("edu_duration{{i}}")[0].value="{{ data.get('edu_duration' ~ i,'') }}";
+{% endif %}
+{% endfor %}
+
+{% for i in range(2,20) %}
+{% if data.get('project' ~ i) %}
+addProject();
+document.getElementsByName("project{{i}}")[0].value="{{ data.get('project' ~ i,'') }}";
+document.getElementsByName("project_desc{{i}}")[0].value="{{ data.get('project_desc' ~ i,'') }}";
+document.getElementsByName("project_tech{{i}}")[0].value="{{ data.get('project_tech' ~ i,'') }}";
+document.getElementsByName("project_link{{i}}")[0].value="{{ data.get('project_link' ~ i,'') }}";
+{% endif %}
+{% endfor %}
+
+{% for i in range(2,20) %}
+{% if data.get('job_title' ~ i) %}
+addExperience();
+document.getElementsByName("job_title{{i}}")[0].value="{{ data.get('job_title' ~ i,'') }}";
+document.getElementsByName("company{{i}}")[0].value="{{ data.get('company' ~ i,'') }}";
+document.getElementsByName("duration{{i}}")[0].value="{{ data.get('duration' ~ i,'') }}";
+document.getElementsByName("description{{i}}")[0].value="{{ data.get('description' ~ i,'') }}";
+{% endif %}
+{% endfor %}
+
+{% for i in range(2,20) %}
+{% if data.get('certification' ~ i) %}
+addCert();
+document.getElementsByName("certification{{i}}")[0].value="{{ data.get('certification' ~ i,'') }}";
+document.getElementsByName("cert_org{{i}}")[0].value="{{ data.get('cert_org' ~ i,'') }}";
+document.getElementsByName("cert_date{{i}}")[0].value="{{ data.get('cert_date' ~ i,'') }}";
+{% endif %}
+{% endfor %}
+
+{% endif %}
+}
+
+
+</script>
+
+</body>
+</html>

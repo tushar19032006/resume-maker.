@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Professional Resume</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#f4f7fa;
+    padding:30px;
+}
+
+.resume{
+    max-width:1000px;
+    margin:auto;
+    background:white;
+    display:flex;
+    box-shadow:0 10px 25px rgba(0,0,0,0.15);
+}
+
+/* LEFT SIDE */
+.left{
+    width:32%;
+    background:#1e293b;
+    color:white;
+    padding:30px;
+}
+
+.left h1{
+    font-size:30px;
+    margin-bottom:10px;
+}
+
+.left p{
+    font-size:14px;
+    margin:8px 0;
+}
+
+.left h2{
+    margin-top:25px;
+    border-bottom:2px solid #38bdf8;
+    padding-bottom:8px;
+    font-size:18px;
+}
+
+.left .item{
+    margin-top:10px;
+    font-size:14px;
+}
+
+/* RIGHT SIDE */
+.right{
+    width:68%;
+    padding:35px;
+}
+
+.section{
+    margin-bottom:28px;
+}
+
+.section h2{
+    color:#0f172a;
+    border-bottom:2px solid #38bdf8;
+    padding-bottom:8px;
+    margin-bottom:15px;
+}
+
+.item{
+    margin-bottom:15px;
+}
+
+.item strong{
+    font-size:16px;
+    color:#111827;
+}
+
+small{
+    color:gray;
+}
+
+.buttons{
+    text-align:center;
+    margin-top:25px;
+}
+
+button{
+    padding:12px 20px;
+    border:none;
+    margin:8px;
+    background:#0ea5e9;
+    color:white;
+    cursor:pointer;
+    border-radius:8px;
+    font-size:15px;
+}
+
+button:hover{
+    background:#0284c7;
+}
+
+@media print{
+    body{
+        background:white;
+        -webkit-print-color-adjust:exact;
+        print-color-adjust:exact;
+    }
+
+    .left{
+        background:#1e293b !important;
+        color:white !important;
+    }
+
+    button{
+        display:none;
+    }
+}
+
+.profile-photo{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.profile-photo img{
+    width:140px;
+    height:140px;
+    border-radius:50%;
+    object-fit:cover;
+    border:5px solid #10b981;
+    box-shadow:0 8px 18px rgba(0,0,0,0.15);
+}
+
+/* =========================
+   MOBILE RESPONSIVE DESIGN
+========================= */
+
+@media screen and (max-width:768px){
+
+    body{
+        padding:12px;
+    }
+
+    .resume{
+        flex-direction:column;
+        width:100%;
+    }
+
+    .left,
+    .right{
+        width:100%;
+        padding:22px;
+    }
+
+    .left{
+        text-align:center;
+    }
+
+    .left h1{
+        font-size:26px;
+    }
+
+    .left h2,
+    .section h2{
+        font-size:22px;
+    }
+
+    .profile-photo img{
+        width:110px;
+        height:110px;
+    }
+
+    .item{
+        margin-bottom:18px;
+    }
+
+    .buttons{
+        margin-top:18px;
+    }
+
+    button{
+        width:100%;
+        margin:8px 0;
+        padding:14px;
+        font-size:16px;
+    }
+
+    a{
+        word-break:break-word;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="resume">
+
+    <!-- LEFT PANEL -->
+    <div class="left">
+        {% if photo %}
+        <div class="profile-photo">
+            <img src="{{ url_for('static',
+            filename='uploads/' + photo) }}">
+        </div>
+        {% endif %}
+
+        <h1>{{ basic.name }}</h1>
+
+        <p>{{ basic.email }}</p>
+        <p>{{ basic.phone }}</p>
+        <p>{{ basic.address }}</p>
+        <p>{{ basic.linkedin }}</p>
+        <p>{{ basic.github }}</p>
+
+        <h2>Skills</h2>
+        <div class="item">
+            <strong>Technical:</strong><br>
+            {{ skills.technical }}
+        </div>
+
+        <div class="item">
+            <strong>Soft:</strong><br>
+            {{ skills.soft }}
+        </div>
+
+        <h2>Certifications</h2>
+        {% for cert in certifications %}
+        <div class="item">
+            {{ cert.name }}<br>
+            <small>{{ cert.org }} ({{ cert.date }})</small>
+        </div>
+        {% endfor %}
+
+        <h2>Hobbies</h2>
+        <div class="item">{{ hobbies }}</div>
+
+    </div>
+
+    <!-- RIGHT PANEL -->
+    <div class="right">
+
+        <div class="section">
+            <h2>Professional Summary</h2>
+            <p>{{ basic.summary }}</p>
+        </div>
+
+        <div class="section">
+            <h2>Work Experience</h2>
+            {% for exp in experience %}
+            <div class="item">
+                <strong>{{ exp.job }}</strong> - {{ exp.company }}<br>
+                <small>{{ exp.duration }}</small>
+                <p>{{ exp.description }}</p>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="section">
+            <h2>Education</h2>
+            {% for edu in education %}
+            <div class="item">
+                <strong>{{ edu.degree }}</strong> - {{ edu.college }}<br>
+                <small>{{ edu.year }} | {{ edu.percentage }} | {{ edu.duration }}</small>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="section">
+            <h2>Projects</h2>
+            {% for proj in projects %}
+            <div class="item">
+                <strong>{{ proj.title }}</strong><br>
+                <p>{{ proj.desc }}</p>
+                <small>{{ proj.tech }}</small><br>
+                <a href="{{ proj.link }}">{{ proj.link }}</a>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="section">
+            <h2>Achievements</h2>
+            <p>{{ achievements }}</p>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Buttons -->
+<div class="buttons">
+
+<form action="{{ url_for('edit_chronological') }}" method="POST">
+
+<input type="hidden" name="photo" value="{{ photo }}">
+
+<input type="hidden" name="name" value="{{ basic.name }}">
+<input type="hidden" name="email" value="{{ basic.email }}">
+<input type="hidden" name="phone" value="{{ basic.phone }}">
+<input type="hidden" name="address" value="{{ basic.address }}">
+<input type="hidden" name="linkedin" value="{{ basic.linkedin }}">
+<input type="hidden" name="github" value="{{ basic.github }}">
+<input type="hidden" name="summary" value="{{ basic.summary }}">
+
+{% for edu in education %}
+<input type="hidden" name="degree{{ loop.index }}" value="{{ edu.degree }}">
+<input type="hidden" name="college{{ loop.index }}" value="{{ edu.college }}">
+<input type="hidden" name="grad_year{{ loop.index }}" value="{{ edu.year }}">
+<input type="hidden" name="percentage{{ loop.index }}" value="{{ edu.percentage }}">
+<input type="hidden" name="edu_duration{{ loop.index }}" value="{{ edu.duration }}">
+{% endfor %}
+
+{% for exp in experience %}
+<input type="hidden" name="job_title{{ loop.index }}" value="{{ exp.job }}">
+<input type="hidden" name="company{{ loop.index }}" value="{{ exp.company }}">
+<input type="hidden" name="duration{{ loop.index }}" value="{{ exp.duration }}">
+<input type="hidden" name="description{{ loop.index }}" value="{{ exp.description }}">
+{% endfor %}
+
+<input type="hidden" name="skills1" value="{{ skills.technical }}">
+<input type="hidden" name="skills_soft1" value="{{ skills.soft }}">
+
+{% for proj in projects %}
+<input type="hidden" name="project{{ loop.index }}" value="{{ proj.title }}">
+<input type="hidden" name="project_desc{{ loop.index }}" value="{{ proj.desc }}">
+<input type="hidden" name="project_tech{{ loop.index }}" value="{{ proj.tech }}">
+<input type="hidden" name="project_link{{ loop.index }}" value="{{ proj.link }}">
+{% endfor %}
+
+{% for cert in certifications %}
+<input type="hidden" name="certification{{ loop.index }}" value="{{ cert.name }}">
+<input type="hidden" name="cert_org{{ loop.index }}" value="{{ cert.org }}">
+<input type="hidden" name="cert_date{{ loop.index }}" value="{{ cert.date }}">
+{% endfor %}
+
+<input type="hidden" name="achievements" value="{{ achievements }}">
+<input type="hidden" name="hobbies" value="{{ hobbies }}">
+
+<button type="submit">Edit Resume</button>
+<button type="button" onclick="window.print()">Print Resume</button>
+
+</form>
+</div>
+
+</body>
+</html>

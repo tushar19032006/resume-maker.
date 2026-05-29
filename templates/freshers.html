@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FRESHERS RESUME Form</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+<style>
+
+body{
+    background:linear-gradient(135deg,#ecfdf5,#f0fdf4);
+    font-family:'Poppins',sans-serif;
+    padding:30px;
+}
+
+.form-container{
+    max-width:900px;
+    margin:auto;
+    background:white;
+    padding:35px;
+    border-radius:20px;
+    box-shadow:0 20px 45px rgba(0,0,0,0.12);
+    border-top:8px solid #16a34a;
+    animation:fadeIn .6s ease;
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+h2{
+    text-align:center;
+    color:#14532d;
+    margin-bottom:25px;
+    font-size:32px;
+    font-weight:700;
+}
+
+h3{
+    color:#15803d;
+    margin:18px 0;
+    font-size:20px;
+}
+
+input,textarea{
+    width:100%;
+    padding:14px;
+    margin:8px 0;
+    border:2px solid #bbf7d0;
+    border-radius:12px;
+    outline:none;
+    transition:.3s;
+    font-size:15px;
+}
+
+input:focus,
+textarea:focus{
+    border-color:#16a34a;
+    box-shadow:0 0 10px rgba(22,163,74,.18);
+}
+
+textarea{
+    min-height:120px;
+    resize:none;
+}
+
+.progress-bar{
+    width:100%;
+    height:12px;
+    background:#dcfce7;
+    border-radius:30px;
+    overflow:hidden;
+    margin-bottom:30px;
+}
+
+.progress{
+    height:100%;
+    background:linear-gradient(90deg,#22c55e,#16a34a);
+    width:0%;
+    transition:.4s;
+}
+
+.step{
+    display:none;
+    background:#f0fdf4;
+    padding:25px;
+    border-radius:18px;
+    margin-bottom:20px;
+    border-left:6px solid #16a34a;
+}
+
+.step.active{
+    display:block;
+}
+
+button{
+    padding:14px 24px;
+    border:none;
+    border-radius:12px;
+    cursor:pointer;
+    font-weight:600;
+    transition:.3s;
+}
+
+.next-btn{
+    background:linear-gradient(90deg,#22c55e,#16a34a);
+    color:white;
+}
+
+.next-btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 12px 25px rgba(22,163,74,.22);
+}
+
+.prev-btn,.back-btn{
+    background:#e5e7eb;
+    color:#111827;
+}
+
+.prev-btn:hover,.back-btn:hover{
+    background:#d1d5db;
+}
+
+.nav-btns{
+    display:flex;
+    justify-content:space-between;
+    margin-top:25px;
+}
+
+hr{
+    border:none;
+    height:2px;
+    background:#bbf7d0;
+    margin:20px 0;
+    border-radius:20px;
+}
+
+/* =========================
+   MOBILE RESPONSIVE DESIGN
+========================= */
+
+@media(max-width:768px){
+
+    body{
+        padding:12px;
+    }
+
+    .form-container{
+        padding:20px;
+        border-radius:16px;
+    }
+
+    h2{
+        font-size:24px;
+    }
+
+    h3{
+        font-size:18px;
+    }
+
+    .step{
+        padding:18px;
+    }
+
+    input,
+    textarea{
+        padding:12px;
+        font-size:14px;
+    }
+
+    textarea{
+        min-height:100px;
+    }
+
+    .nav-btns{
+        flex-direction:column;
+        gap:12px;
+    }
+
+    button{
+        width:100%;
+        padding:14px;
+        font-size:15px;
+    }
+
+    .progress-bar{
+        height:10px;
+    }
+
+    img{
+        width:90px !important;
+        height:90px !important;
+    }
+
+}
+
+</style>
+</head>
+<body>
+
+<div class="form-container">
+
+<h2>FRESHERS RESUME Form</h2>
+
+<div class="progress-bar">
+    <div class="progress" id="progress"></div>
+</div>
+
+<form action="/generate/freshers" method="POST" enctype="multipart/form-data">
+
+<div class="step active">
+    <h3>Basic Details</h3>
+    <input type="text" name="name" value="{{ data.get('name','') if data else '' }}" placeholder="Full Name" required><br>
+    <input type="email" name="email" value="{{ data.get('email','') if data else '' }}" placeholder="Email" required><br>
+    <input type="text" name="phone" value="{{ data.get('phone','') if data else '' }}" placeholder="Phone" required><br>
+    <input type="text" name="address" value="{{ data.get('address','') if data else '' }}" placeholder="Address" required><br>
+    <input type="text" name="linkedin" value="{{ data.get('linkedin','') if data else '' }}" placeholder="LinkedIn Profile"><br>
+    <input type="text" name="github" value="{{ data.get('github','') if data else '' }}" placeholder="GitHub Profile"><br><br>
+    <hr>
+
+     <label>Upload Profile Photo</label>
+
+    <input type="file"
+        name="photo"
+        accept="image/*">
+
+    <input type="hidden"
+        name="existing_photo"
+        value="{{ data.get('photo','') if data else '' }}">
+
+    {% if data and data.get('photo') %}
+
+    <img src="/{{ data.get('photo') }}"
+        width="120"
+        height="120"
+        style="
+            border-radius:50%;
+            object-fit:cover;
+            margin-top:10px;
+            border:3px solid #ff7a18;
+    ">
+
+    {% endif %}
+
+    <div class="nav-btns">
+        <button type="button" class="back-btn" onclick="window.location.href='/index.html'">Back</button>
+        <button type="button" class="next-btn" onclick="nextStep()">Next</button>
+    </div>
+</div>
+
+<div class="step">
+    <h3>Objective</h3>
+    <textarea name="objective" placeholder="Write your career objective...">{{ data.get('objective','') if data else '' }}</textarea>
+    <hr>
+
+    <div class="nav-btns">
+        <button type="button" class="prev-btn" onclick="prevStep()">Back</button>
+        <button type="button" class="next-btn" onclick="nextStep()">Next</button>
+    </div>
+</div>
+
+<div class="step">
+    <h3>Education</h3> 
+    <div id="education-section"> 
+    <input type="text" name="degree1" value="{{ data.get('degree1','') if data else '' }}" placeholder="Degree">
+    <input type="text" name="college1" value="{{ data.get('college1','') if data else '' }}" placeholder="College / University">  
+    <input type="text" name="grad_year1" value="{{ data.get('grad_year1','') if data else '' }}" placeholder="Graduation Year">
+    <input type="text" name="percentage1" value="{{ data.get('percentage1','') if data else '' }}" placeholder="Percentage/CGPA">
+    <input type="text" name="edu_duration1" value="{{ data.get('edu_duration1','') if data else '' }}" placeholder="Duration">
+    <hr>
+    </div>
+
+    <button type="button" onclick="addEducation()">Add More Education</button>
+    <hr>
+
+    <div class="nav-btns">
+        <button type="button" class="prev-btn" onclick="prevStep()">Back</button>
+        <button type="button" class="next-btn" onclick="nextStep()">Next</button>
+    </div>
+</div>
+
+<div class="step">
+    <h3>Skills</h3> 
+    <input type="text" name="technical_skills" value="{{ data.get('technical_skills','') if data else '' }}" placeholder="Technical Skills">
+    <input type="text" name="soft_skills" value="{{ data.get('soft_skills','') if data else '' }}" placeholder="Soft Skills">
+    <hr>
+    
+    <div class="nav-btns">
+        <button type="button" class="prev-btn" onclick="prevStep()">Back</button>
+        <button type="button" class="next-btn" onclick="nextStep()">Next</button>
+    </div>
+</div>
+
+<div class="step">
+    <h3>Projects/ Mini-projects</h3>
+    <div id="project-section">
+    <input type="text" name="proj_title1" value="{{ data.get('proj_title1','') if data else '' }}" placeholder="Project Title">  
+    <textarea name="proj_desc1" placeholder="Project Description">{{ data.get('proj_desc1','') if data else '' }}</textarea>
+    <input type="text" name="proj_tech1" value="{{ data.get('proj_tech1','') if data else '' }}" placeholder="Technologies Used">
+    <input type="text" name="proj_link1" value="{{ data.get('proj_link1','') if data else '' }}" placeholder="Project Link (if any)">
+    <hr>
+    </div>
+
+    <button type="button" onclick="addProject()">Add More Projects</button>
+    <hr>
+
+    <div class="nav-btns">
+        <button type="button" class="prev-btn" onclick="prevStep()">Back</button>
+        <button type="button" class="next-btn" onclick="nextStep()">Next</button>
+    </div>
+</div>
+
+<div class="step">
+    <h3>Internships</h3>
+    <div id="internship-section">
+    <input type="text" name="intern_title1" value="{{ data.get('intern_title1','') if data else '' }}" placeholder="Internship Title">
+    <input type="text" name="intern_org1" value="{{ data.get('intern_org1','') if data else '' }}" placeholder="Organization">
+    <input type="text" name="intern_duration1" value="{{ data.get('intern_duration1','') if data else '' }}" placeholder="Duration">
+    <textarea name="intern_desc1" placeholder="Internship Description">{{ data.get('intern_desc1','') if data else '' }}</textarea>
+    <hr>
+    </div>
+
+    <button type="button" onclick="addInternship()">Add More Internships</button>
+    <hr>
+
+    <div class="nav-btns">
+        <button type="button" class="prev-btn" onclick="prevStep()">Back</button>
+        <button type="button" class="next-btn" onclick="nextStep()">Next</button>
+    </div>
+</div>
+
+<div class="step">
+    <h3>Certifications</h3>
+    <div id="certification-section">
+    <input type="text" name="cert_name1" value="{{ data.get('cert_name1','') if data else '' }}" placeholder="Certification Name">
+    <input type="text" name="cert_org1" value="{{ data.get('cert_org1','') if data else '' }}" placeholder="Issuing Organization">
+    <input type="text" name="cert_date1" value="{{ data.get('cert_date1','') if data else '' }}" placeholder="Date Obtained">
+    <hr>
+    </div>
+
+    <button type="button" onclick="addCertification()">Add More Certifications</button>
+    <hr>
+    <h3>Achievements</h3>
+    <textarea name="ach_desc1" placeholder="Describe your achievements...">{{ data.get('ach_desc1','') if data else '' }}</textarea>
+    <hr>
+    <h3>Hobbies & Interests</h3>
+    <textarea name="hobbies" placeholder="List your hobbies and interests...">{{ data.get('hobbies','') if data else '' }}</textarea>
+    
+    <div class="nav-btns">
+        <button type="button" class="prev-btn" onclick="prevStep()">Back</button>
+        <button type="submit" class="next-btn">Generate Resume</button>
+    </div>
+</div>
+</form>
+   
+<script>
+let educount = 2;
+let projectCount = 2;
+let internCount = 2;
+let certCount = 2;
+
+function addEducation() {
+    let container = document.getElementById("education-section");
+
+    let html = `
+        <input type="text" name="degree${educount}" placeholder="Degree">
+        <input type="text" name="college${educount}" placeholder="College">
+        <input type="text" name="grad_year${educount}" placeholder="Graduation Year">
+        <input type="text" name="percentage${educount}" placeholder="Percentage">
+        <input type="text" name="edu_duration${educount}" placeholder="Duration">
+        <hr>
+    `;
+
+    container.insertAdjacentHTML("beforeend", html);
+    educount++;
+}
+
+function addProject() {
+    let container = document.getElementById("project-section");
+
+    let html = `
+        <input type="text" name="proj_title${projectCount}" placeholder="Project Title">
+        <textarea name="proj_desc${projectCount}" placeholder="Description"></textarea>
+        <input type="text" name="proj_tech${projectCount}" placeholder="Technologies Used">
+        <input type="text" name="proj_link${projectCount}" placeholder="Project Link">
+        <hr>
+    `;
+
+    container.insertAdjacentHTML("beforeend", html);
+    projectCount++;
+}
+
+function addInternship() {
+    let container = document.getElementById("internship-section");
+
+    let html = `
+        <input type="text" name="intern_title${internCount}" placeholder="Internship Title">
+        <input type="text" name="intern_org${internCount}" placeholder="Organization">
+        <input type="text" name="intern_duration${internCount}" placeholder="Duration">
+        <textarea name="intern_desc${internCount}" placeholder="Description"></textarea>
+        <hr>
+    `;
+
+    container.insertAdjacentHTML("beforeend", html);
+    internCount++;
+}
+
+function addCertification() {
+    let container = document.getElementById("certification-section");
+
+    let html = `
+        <input type="text" name="cert_name${certCount}" placeholder="Certification Name">
+        <input type="text" name="cert_org${certCount}" placeholder="Issuing Organization">
+        <input type="text" name="cert_date${certCount}" placeholder="Date Obtained">
+        <hr>
+    `;
+
+    container.insertAdjacentHTML("beforeend", html);
+    certCount++;
+}
+
+let currentStep = 0;
+const steps = document.querySelectorAll(".step");
+const progress = document.getElementById("progress");
+
+function showStep(index) {
+    steps.forEach((step, i) => {
+        step.classList.toggle("active", i === index);
+    });
+
+    let percent = ((index + 1) / steps.length) * 100;
+    progress.style.width = percent + "%";
+}
+
+function nextStep() {
+    if (currentStep < steps.length - 1) {
+        currentStep++;
+        showStep(currentStep);
+    }
+}
+
+function prevStep() {
+    if (currentStep > 0) {
+        currentStep--;
+        showStep(currentStep);
+    }
+}
+
+showStep(currentStep);
+
+function nextStep() {
+    const current = steps[currentStep];
+    const inputs = current.querySelectorAll("input, textarea");
+
+    for (let input of inputs) {
+        if (!input.checkValidity()) {
+            input.reportValidity(); // shows browser error
+            return; // STOP going next
+        }
+    }
+
+    if (currentStep < steps.length - 1) {
+        currentStep++;
+        showStep(currentStep);
+    }
+}
+
+window.onload = function () {
+
+{% if data %}
+
+{% for i in range(2,10) %}
+{% if data.get('degree' ~ i) %}
+addEducation();
+document.getElementsByName("degree{{i}}")[0].value="{{ data.get('degree' ~ i,'') }}";
+document.getElementsByName("college{{i}}")[0].value="{{ data.get('college' ~ i,'') }}";
+document.getElementsByName("grad_year{{i}}")[0].value="{{ data.get('grad_year' ~ i,'') }}";
+document.getElementsByName("percentage{{i}}")[0].value="{{ data.get('percentage' ~ i,'') }}";
+document.getElementsByName("edu_duration{{i}}")[0].value="{{ data.get('edu_duration' ~ i,'') }}";
+{% endif %}
+{% endfor %}
+
+{% for i in range(2,10) %}
+{% if data.get('proj_title' ~ i) %}
+addProject();
+document.getElementsByName("proj_title{{i}}")[0].value="{{ data.get('proj_title' ~ i,'') }}";
+document.getElementsByName("proj_desc{{i}}")[0].value="{{ data.get('proj_desc' ~ i,'') }}";
+document.getElementsByName("proj_tech{{i}}")[0].value="{{ data.get('proj_tech' ~ i,'') }}";
+document.getElementsByName("proj_link{{i}}")[0].value="{{ data.get('proj_link' ~ i,'') }}";
+{% endif %}
+{% endfor %}
+
+{% for i in range(2,10) %}
+{% if data.get('intern_title' ~ i) %}
+addInternship();
+document.getElementsByName("intern_title{{i}}")[0].value="{{ data.get('intern_title' ~ i,'') }}";
+document.getElementsByName("intern_org{{i}}")[0].value="{{ data.get('intern_org' ~ i,'') }}";
+document.getElementsByName("intern_duration{{i}}")[0].value="{{ data.get('intern_duration' ~ i,'') }}";
+document.getElementsByName("intern_desc{{i}}")[0].value="{{ data.get('intern_desc' ~ i,'') }}";
+{% endif %}
+{% endfor %}
+
+{% for i in range(2,10) %}
+{% if data.get('cert_name' ~ i) %}
+addCertification();
+document.getElementsByName("cert_name{{i}}")[0].value="{{ data.get('cert_name' ~ i,'') }}";
+document.getElementsByName("cert_org{{i}}")[0].value="{{ data.get('cert_org' ~ i,'') }}";
+document.getElementsByName("cert_date{{i}}")[0].value="{{ data.get('cert_date' ~ i,'') }}";
+{% endif %}
+{% endfor %}
+
+{% endif %}
+}
+
+</script>
+</body>
+</html>

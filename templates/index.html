@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Select Resume Format</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<style>
+
+    /* =====================================
+    RESUME FORMAT PAGE EXTRA RESPONSIVE
+    ===================================== */
+
+    h1{
+        margin-bottom: 40px;
+    }
+
+    /* Back Button */
+    .back-btn{
+        margin-top:30px;
+        display:flex;
+        justify-content:center;
+    }
+
+    .back-btn button{
+        padding:12px 24px;
+        border:none;
+        border-radius:10px;
+        background:#333;
+        color:white;
+        cursor:pointer;
+        transition:0.3s;
+        width:100%;
+        max-width:250px;
+    }
+
+    .back-btn button:hover{
+        background:black;
+        transform:translateY(-3px);
+    }
+
+    /* Card Lists */
+    .card ul{
+        padding-left:20px;
+        line-height:1.8;
+    }
+
+    /* =========================
+    TABLET
+    ========================= */
+
+    @media(max-width:992px){
+
+        h1{
+            font-size:38px;
+        }
+
+        .card{
+            width:100%;
+        }
+    }
+
+    /* =========================
+    MOBILE
+    ========================= */
+
+    @media(max-width:768px){
+
+        h1{
+            font-size:30px;
+            line-height:1.4;
+        }
+
+        .card ul{
+            text-align:left;
+        }
+
+        .format-card{
+            width:100%;
+        }
+
+        .back-btn button{
+            width:100%;
+        }
+    }
+
+    /* =========================
+    SMALL MOBILE
+    ========================= */
+
+    @media(max-width:480px){
+
+        h1{
+            font-size:24px;
+        }
+
+        .format-card h2{
+            font-size:22px;
+        }
+
+        .format-card p{
+            font-size:14px;
+        }
+
+        .card{
+            padding:15px;
+        }
+    }
+</style>
+<body>
+
+<div class="container">
+
+    <h1><u>Select Your Resume Format</u></h1>
+
+    <div class="main-grid">
+
+        <!-- LEFT RULES -->
+        <div class="card">
+            <h3><u>Resume Tips</u></h3>
+            <ul>
+                <li>Use a clean, professional font</li>
+                <li>Keep it one page</li>
+                <li>Use bullet points</li>
+                <li>Customize for each job</li>
+            </ul>
+        </div>
+
+        <!-- CENTER OPTIONS -->
+        <div class="formats">
+
+            <div class="format-card" onclick="location.href='chronological.html'">
+                <h2><u>Chronological</u></h2>
+                <p>Best for experienced professionals</p>
+            </div>
+
+            <div class="format-card" onclick="location.href='functional.html'">
+                <h2><u>Functional</u></h2>
+                <p>Focus on skills over experience</p>
+            </div>
+
+            <div class="format-card" onclick="location.href='combinational.html'">
+                <h2><u>Combinational</u></h2>
+                <p>Mix of skills and experience</p>
+            </div>
+
+            <div class="format-card" onclick="location.href='freshers.html'">
+                <h2><u>Fresher</u></h2>
+                <p>Perfect for students & beginners</p>
+            </div>
+
+        </div>
+
+        <!-- RIGHT RULES -->
+        <div class="card">
+            <h3><u>Make It Impressive</u></h3>
+            <ul>
+                <li>Start with strong objective</li>
+                <li>Highlight key achievements</li>
+                <li>Use real examples</li>
+                <li>Proofread carefully</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="back-btn">
+        <button onclick="window.location.href='/'">← Back to Home</button>
+    </div>
+
+</div>
+
+</body>
+</html>

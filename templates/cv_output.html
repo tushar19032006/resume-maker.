@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CV Output</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<style>
+body{
+    font-family:'Segoe UI',sans-serif;
+    margin:0;
+    background:#eef2f7;
+    color:#333;
+}
+
+.cv{
+    max-width:1100px;
+    margin:40px auto;
+    display:grid;
+    grid-template-columns:320px 1fr;
+    background:white;
+    box-shadow:0 10px 25px rgba(0,0,0,0.15);
+    border-radius:12px;
+    overflow:hidden;
+}
+
+/* LEFT SIDEBAR */
+.sidebar{
+    background:#1e293b;
+    color:white;
+    padding:35px;
+}
+
+.sidebar h1{
+    margin:0;
+    font-size:32px;
+}
+
+.sidebar p{
+    font-size:14px;
+    line-height:1.7;
+}
+
+.side-title{
+    margin-top:30px;
+    font-size:18px;
+    border-bottom:2px solid #38bdf8;
+    padding-bottom:8px;
+}
+
+/* RIGHT CONTENT */
+.main{
+    padding:40px;
+}
+
+.section{
+    margin-bottom:28px;
+}
+
+.section h2{
+    color:#0f172a;
+    border-left:5px solid #38bdf8;
+    padding-left:12px;
+    margin-bottom:14px;
+}
+
+.item{
+    margin-bottom:18px;
+}
+
+.small{
+    color:#64748b;
+    font-size:14px;
+}
+
+a{
+    color:#0ea5e9;
+    text-decoration:none;
+}
+
+a:hover{
+    text-decoration:underline;
+}
+
+/* BUTTONS */
+
+.buttons{
+    text-align:center;
+    margin:30px 0;
+}
+
+.buttons button{
+    background:linear-gradient(90deg,#0ea5e9,#2563eb);
+    color:white;
+    border:none;
+    padding:14px 24px;
+    margin:10px;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.buttons button:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 20px rgba(37,99,235,.2);
+}
+
+/* PRINT */
+
+@media print{
+
+    body{
+        background:white;
+    }
+
+    .buttons{
+        display:none;
+    }
+
+    .cv{
+        box-shadow:none;
+        margin:0;
+        max-width:100%;
+    }
+}
+
+/* MOBILE RESPONSIVE */
+
+@media(max-width:768px){
+
+    .cv{
+        grid-template-columns:1fr;
+        margin:15px;
+    }
+
+    .sidebar{
+        text-align:center;
+        padding:25px;
+    }
+
+    .main{
+        padding:25px;
+    }
+
+    .sidebar h1{
+        font-size:26px;
+    }
+
+    .section h2{
+        font-size:20px;
+    }
+
+    .item{
+        font-size:14px;
+    }
+
+    img{
+        width:110px !important;
+        height:110px !important;
+    }
+
+    .buttons button{
+        width:90%;
+        margin:10px auto;
+        display:block;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="cv">
+
+<div class="sidebar">
+
+    {% if cv.photo %}
+    <img src="{{ url_for('static', filename='uploads/' + cv.photo) }}"
+        width="140"
+        height="140"
+        style="
+            border-radius:50%;
+            object-fit:cover;
+            border:4px solid #6c3df4;
+    ">
+    {% endif %}
+
+    <h1>{{ cv.personal.name }}</h1>
+
+    <p>
+        {{ cv.personal.email }}<br>
+        {{ cv.personal.phone }}<br>
+        {{ cv.personal.address }}<br><br>
+        {{ cv.personal.linkedin }}<br>
+        {{ cv.personal.github }}
+    </p>
+
+    <div class="side-title">Skills</div>
+    <p>{{ cv.skills }}</p>
+
+    <div class="side-title">Soft Skills</div>
+    <p>{{ cv.soft_skills }}</p>
+
+    <div class="side-title">Languages</div>
+    <p>{{ cv.languages }}</p>
+
+    <div class="side-title">References</div>
+    <p>{{ cv.references }}</p>
+</div>
+
+<div class="main">
+
+<div class="section">
+<h2>Professional Summary</h2>
+<p>{{ cv.personal.objective }}</p>
+</div>
+
+<div class="section">
+<h2>Education</h2>
+{% for edu in cv.education %}
+<div class="item">
+<b>{{ edu.degree }}</b> - {{ edu.college }}<br>
+<span class="small">{{ edu.year }} | {{ edu.percentage }} | {{ edu.duration }}</span>
+</div>
+{% endfor %}
+</div>
+
+<div class="section">
+<h2>Research / Thesis</h2>
+<p>{{ cv.research }}</p>
+</div>
+
+<div class="section">
+<h2>Projects</h2>
+{% for p in cv.projects %}
+<div class="item">
+<b>{{ p.title }}</b><br>
+{{ p.desc }}<br>
+<span class="small">{{ p.tech }}</span><br>
+<a href="{{ p.link }}">{{ p.link }}</a>
+</div>
+{% endfor %}
+</div>
+
+<div class="section">
+<h2>Experience</h2>
+{% for e in cv.experience %}
+<div class="item">
+<b>{{ e.job }}</b> - {{ e.company }}<br>
+<span class="small">{{ e.duration }}</span>
+<p>{{ e.desc }}</p>
+</div>
+{% endfor %}
+</div>
+
+<div class="section">
+<h2>Publications</h2>
+<p>{{ cv.publications }}</p>
+</div>
+
+<div class="section">
+<h2>Certifications</h2>
+{% for c in cv.certifications %}
+<p>{{ c.name }} - {{ c.org }} ({{ c.date }})</p>
+{% endfor %}
+</div>
+
+<div class="section">
+<h2>Awards & Achievements</h2>
+<p>{{ cv.awards }}</p>
+<p>{{ cv.achievements }}</p>
+</div>
+
+<div class="section">
+<h2>Conferences & Workshops</h2>
+<p>{{ cv.conferences }}</p>
+</div>
+
+</div>
+</div>
+
+<div class="buttons">
+
+<!-- FORM -->
+<form action="{{ url_for('edit_cv') }}" method="POST">
+
+<input type="hidden" name="photo" value="{{ photo }}">
+
+<input type="hidden" name="name" value="{{ cv.personal.name }}">
+<input type="hidden" name="email" value="{{ cv.personal.email }}">
+<input type="hidden" name="phone" value="{{ cv.personal.phone }}">
+<input type="hidden" name="address" value="{{ cv.personal.address }}">
+<input type="hidden" name="linkedin" value="{{ cv.personal.linkedin }}">
+<input type="hidden" name="github" value="{{ cv.personal.github }}">
+<input type="hidden" name="objective" value="{{ cv.personal.objective }}">
+
+<input type="hidden" name="research" value="{{ cv.research }}">
+<input type="hidden" name="publications" value="{{ cv.publications }}">
+<input type="hidden" name="skills1" value="{{ cv.skills }}">
+<input type="hidden" name="skills_soft1" value="{{ cv.soft_skills }}">
+<input type="hidden" name="languages" value="{{ cv.languages }}">
+<input type="hidden" name="award1" value="{{ cv.awards }}">
+<input type="hidden" name="achievement1" value="{{ cv.achievements }}">
+<input type="hidden" name="conferences" value="{{ cv.conferences }}">
+<input type="hidden" name="references" value="{{ cv.references }}">
+
+<button type="submit">Edit Resume</button>
+<button type="button" onclick="window.print()">Print Resume</button>
+
+</form>
+</body>
+</html>

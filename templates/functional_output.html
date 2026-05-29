@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Functional Resume</title>
+    <meta charset="UTF-8">
+
+<style>
+body{
+    font-family:Arial;
+    background:#f7f9fc;
+    margin:0;
+    padding:30px;
+}
+
+.resume{
+    max-width:1100px;
+    margin:auto;
+    background:white;
+    border-radius:15px;
+    overflow:hidden;
+    box-shadow:0 8px 30px rgba(0,0,0,0.12);
+}
+
+.header{
+    background:linear-gradient(135deg,#4f46e5,#2563eb);
+    color:white;
+    padding:40px;
+
+    display:flex;
+    align-items:center;
+    justify-content:flex-start;
+    gap:40px;
+}
+
+.header-left{
+    flex-shrink:0;
+}
+
+.profile-pic{
+    width:160px;
+    height:160px;
+    border-radius:50%;
+    object-fit:cover;
+    border:5px solid white;
+}
+
+.header-right{
+    flex:1;
+}
+
+.header-right h1{
+    margin:0;
+    font-size:45px;
+}
+
+.contact{
+    margin-top:12px;
+    font-size:18px;
+    line-height:1.7;
+}
+
+.content{
+    padding:40px;
+}
+
+.section{
+    margin-bottom:35px;
+}
+
+.section h2{
+    color:#2563eb;
+    border-bottom:3px solid #dbeafe;
+    padding-bottom:10px;
+}
+
+.skill-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+}
+
+.skill-card{
+    background:#eff6ff;
+    padding:20px;
+    border-radius:12px;
+}
+
+.project{
+    background:#f9fafb;
+    padding:20px;
+    margin:15px 0;
+    border-left:5px solid #2563eb;
+    border-radius:8px;
+}
+
+.edu-box, .cert-box{
+    background:#fafafa;
+    padding:18px;
+    margin:15px 0;
+    border-radius:10px;
+}
+
+.buttons{
+    text-align:center;
+    margin:25px;
+}
+
+button{
+    background:#2563eb;
+    color:white;
+    border:none;
+    padding:14px 25px;
+    border-radius:8px;
+    cursor:pointer;
+    margin:10px;
+}
+
+button:hover{
+    background:#1d4ed8;
+}
+
+@media print{
+    .buttons{display:none;}
+}
+
+/* =========================
+   MOBILE RESPONSIVE DESIGN
+========================= */
+
+@media screen and (max-width:768px){
+
+    body{
+        padding:12px;
+    }
+
+    .resume{
+        width:100%;
+        border-radius:12px;
+    }
+
+    .header{
+        flex-direction:column;
+        text-align:center;
+        padding:25px 20px;
+        gap:20px;
+    }
+
+    .profile-pic{
+        width:120px;
+        height:120px;
+    }
+
+    .header-right h1{
+        font-size:30px;
+    }
+
+    .contact{
+        font-size:15px;
+        line-height:1.6;
+    }
+
+    .content{
+        padding:20px;
+    }
+
+    .section{
+        margin-bottom:25px;
+    }
+
+    .section h2{
+        font-size:22px;
+    }
+
+    .skill-grid{
+        grid-template-columns:1fr;
+    }
+
+    .skill-card{
+        padding:16px;
+    }
+
+    .project,
+    .edu-box,
+    .cert-box{
+        padding:15px;
+    }
+
+    .buttons{
+        margin:15px;
+    }
+
+    button{
+        width:100%;
+        margin:8px 0;
+        padding:14px;
+        font-size:16px;
+    }
+
+    a{
+        word-break:break-word;
+    }
+}
+
+</style>
+</head>
+<body>
+
+<div class="resume">
+
+<div class="header">
+
+    <div class="header-left">
+
+        {% if photo %}
+        <img src="{{ url_for('static', filename='uploads/' + photo) }}"
+             class="profile-pic">
+        {% endif %}
+
+    </div>
+
+    <div class="header-right">
+
+        <h1>{{ basic.name }}</h1>
+
+        <div class="contact">
+            {{ basic.email }} | {{ basic.phone }} <br>
+            {{ basic.address }} <br>
+            {{ basic.linkedin }}  {{ basic.github }}
+        </div>
+
+    </div>
+
+</div>
+
+<div class="content">
+
+<div class="section">
+<h2>Professional Summary</h2>
+<p>{{ basic.summary }}</p>
+</div>
+
+<div class="section">
+<h2>Core Skills</h2>
+
+<div class="skill-grid">
+
+<div class="skill-card">
+<b>Technical Skills</b><br><br>
+{{ skills.technical }}
+</div>
+
+<div class="skill-card">
+<b>Soft Skills</b><br><br>
+{{ skills.soft }}
+</div>
+
+<div class="skill-card">
+<b>Problem Solving</b><br><br>
+{{ skills.problem }}
+</div>
+
+</div>
+</div>
+
+<div class="section">
+<h2>Projects</h2>
+{% for p in projects %}
+<div class="project">
+<b>{{ p.title }}</b> ({{ p.language }})<br><br>
+{{ p.desc }}<br><br>
+<a href="{{ p.link }}">{{ p.link }}</a>
+</div>
+{% endfor %}
+</div>
+
+<div class="section">
+<h2>Education</h2>
+{% for e in education %}
+<div class="edu-box">
+<b>{{ e.degree }}</b><br>
+{{ e.college }}<br>
+{{ e.year }} | {{ e.duration }} | {{ e.percentage }}
+</div>
+{% endfor %}
+</div>
+
+<div class="section">
+<h2>Certifications</h2>
+{% for c in certifications %}
+<div class="cert-box">
+<b>{{ c.name }}</b><br>
+{{ c.org }} ({{ c.date }})
+</div>
+{% endfor %}
+</div>
+
+<div class="section">
+<h2>Achievements</h2>
+<p>{{ achievements }}</p>
+</div>
+
+<div class="section">
+<h2>Hobbies</h2>
+<p>{{ hobbies }}</p>
+</div>
+
+</div>
+</div>
+
+
+<div class="buttons">
+<form action="{{ url_for('edit_functional') }}" method="POST">
+
+<input type="hidden" name="photo" value="{{ photo }}">
+
+<input type="hidden" name="name" value="{{ basic.name }}">
+<input type="hidden" name="email" value="{{ basic.email }}">
+<input type="hidden" name="phone" value="{{ basic.phone }}">
+<input type="hidden" name="address" value="{{ basic.address }}">
+<input type="hidden" name="linkedin" value="{{ basic.linkedin }}">
+<input type="hidden" name="github" value="{{ basic.github }}">
+<input type="hidden" name="summary" value="{{ basic.summary }}">
+
+<!-- SKILLS -->
+<input type="hidden" name="skills" value="{{ skills.technical }}">
+<input type="hidden" name="skills_soft" value="{{ skills.soft }}">
+<input type="hidden" name="skills_problem" value="{{ skills.problem }}">
+
+<!-- PROJECTS -->
+{% for p in projects %}
+<input type="hidden" name="project{{ loop.index }}" value="{{ p.title }}">
+<input type="hidden" name="language{{ loop.index }}" value="{{ p.language }}">
+<input type="hidden" name="project_desc{{ loop.index }}" value="{{ p.desc }}">
+<input type="hidden" name="project_link{{ loop.index }}" value="{{ p.link }}">
+{% endfor %}
+
+<!-- EDUCATION -->
+{% for e in education %}
+<input type="hidden" name="degree{{ loop.index }}" value="{{ e.degree }}">
+<input type="hidden" name="college{{ loop.index }}" value="{{ e.college }}">
+<input type="hidden" name="grad_year{{ loop.index }}" value="{{ e.year }}">
+<input type="hidden" name="percentage{{ loop.index }}" value="{{ e.percentage }}">
+<input type="hidden" name="edu_duration{{ loop.index }}" value="{{ e.duration }}">
+{% endfor %}
+
+<!-- CERTIFICATIONS -->
+{% for c in certifications %}
+<input type="hidden" name="certi_name{{ loop.index }}" value="{{ c.name }}">
+<input type="hidden" name="cert_org{{ loop.index }}" value="{{ c.org }}">
+<input type="hidden" name="cert_date{{ loop.index }}" value="{{ c.date }}">
+{% endfor %}
+
+<!-- OTHER -->
+<input type="hidden" name="achievements" value="{{ achievements }}">
+<input type="hidden" name="hobbies" value="{{ hobbies }}">
+
+<button type="submit">Edit Resume</button>
+<button type="button" onclick="window.print()">Print Resume</button>
+
+</form>
+
+</div>
+
+</body>
+</html>

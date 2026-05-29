@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Freshers Resume</title>
+<meta charset="UTF-8">
+
+<style>
+body{
+    font-family:Arial,sans-serif;
+    margin:0;
+    background:#eef2ff;
+}
+
+.resume{
+    max-width:1000px;
+    margin:30px auto;
+    background:white;
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 10px 25px rgba(0,0,0,0.12);
+}
+
+/* HEADER */
+.header{
+    background:linear-gradient(135deg,#4f46e5,#2563eb);
+    color:white;
+    padding:40px;
+
+    display:flex;
+    align-items:center;
+    justify-content:flex-start;
+    gap:40px;
+}
+
+.header-left{
+    flex-shrink:0;
+}
+
+.profile-pic{
+    width:160px;
+    height:160px;
+    border-radius:50%;
+    object-fit:cover;
+    border:5px solid white;
+}
+
+.header-right{
+    flex:1;
+}
+
+.header-right h1{
+    margin:0;
+    font-size:45px;
+}
+
+.contact{
+    margin-top:12px;
+    font-size:18px;
+    line-height:1.7;
+}
+
+/* CONTENT */
+.content{
+    padding:35px;
+}
+
+.section{
+    margin-bottom:30px;
+}
+
+.section h2{
+    color:#2563eb;
+    border-bottom:3px solid #bfdbfe;
+    padding-bottom:8px;
+}
+
+/* BOX STYLE */
+.box{
+    background:#f8fafc;
+    border-left:5px solid #2563eb;
+    padding:18px;
+    border-radius:10px;
+    margin:15px 0;
+}
+
+.skill-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+.skill-card{
+    background:#eff6ff;
+    padding:20px;
+    border-radius:12px;
+}
+
+button{
+    background:#2563eb;
+    color:white;
+    border:none;
+    padding:14px 24px;
+    border-radius:8px;
+    cursor:pointer;
+    margin:10px;
+}
+
+button:hover{
+    background:#1d4ed8;
+}
+
+.buttons{
+    text-align:center;
+    padding:25px;
+}
+
+@media print{
+    .buttons{
+        display:none;
+    }
+}
+
+/* =========================
+   TABLET RESPONSIVE
+========================= */
+@media(max-width:992px){
+
+    .resume{
+        margin:20px;
+    }
+
+    .header{
+        flex-direction:column;
+        text-align:center;
+        gap:20px;
+        padding:30px 20px;
+    }
+
+    .header-right h1{
+        font-size:36px;
+    }
+
+    .contact{
+        font-size:16px;
+    }
+
+    .content{
+        padding:25px;
+    }
+
+    .skill-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+/* =========================
+   MOBILE RESPONSIVE
+========================= */
+@media(max-width:768px){
+
+    .resume{
+        margin:10px;
+        border-radius:12px;
+    }
+
+    .header{
+        padding:25px 15px;
+    }
+
+    .profile-pic{
+        width:120px;
+        height:120px;
+    }
+
+    .header-right h1{
+        font-size:28px;
+    }
+
+    .contact{
+        font-size:14px;
+        line-height:1.6;
+        word-break:break-word;
+    }
+
+    .content{
+        padding:18px;
+    }
+
+    .section{
+        margin-bottom:22px;
+    }
+
+    .section h2{
+        font-size:22px;
+    }
+
+    .box{
+        padding:14px;
+    }
+
+    .skill-grid{
+        grid-template-columns:1fr;
+        gap:15px;
+    }
+
+    .skill-card{
+        padding:16px;
+    }
+
+    .buttons{
+        padding:20px 10px;
+    }
+
+    button{
+        width:100%;
+        margin:8px 0;
+        font-size:15px;
+    }
+}
+
+/* =========================
+   SMALL MOBILE
+========================= */
+@media(max-width:480px){
+
+    .header-right h1{
+        font-size:24px;
+    }
+
+    .contact{
+        font-size:13px;
+    }
+
+    .section h2{
+        font-size:20px;
+    }
+
+    .profile-pic{
+        width:100px;
+        height:100px;
+    }
+
+    .content{
+        padding:14px;
+    }
+
+    .box{
+        font-size:14px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="resume">
+
+<div class="header">
+
+    <div class="header-left">
+
+        {% if photo %}
+        <img src="{{ url_for('static', filename='uploads/' + photo) }}"
+             class="profile-pic">
+        {% endif %}
+
+    </div>
+
+    <div class="header-right">
+
+        <h1>{{ basic.name }}</h1>
+
+        <div class="contact">
+            {{ basic.email }} | {{ basic.phone }} <br>
+            {{ basic.address }} <br>
+            {{ basic.linkedin }}  {{ basic.github }}
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="content">
+
+<div class="section">
+<h2>Career Objective</h2>
+<p>{{ basic.objective }}</p>
+</div>
+
+<div class="section">
+<h2>Education</h2>
+{% for edu in education %}
+<div class="box">
+<strong>{{ edu.degree }}</strong><br>
+{{ edu.college }}<br>
+{{ edu.year }} | {{ edu.percentage }} | {{ edu.duration }}
+</div>
+{% endfor %}
+</div>
+
+<div class="section">
+<h2>Skills</h2>
+
+<div class="skill-grid">
+
+<div class="skill-card">
+<b>Technical Skills</b><br><br>
+{{ technical }}
+</div>
+
+<div class="skill-card">
+<b>Soft Skills</b><br><br>
+{{ soft }}
+</div>
+
+</div>
+</div>
+
+<div class="section">
+<h2>Projects</h2>
+{% for proj in projects %}
+<div class="box">
+<strong>{{ proj.title }}</strong><br><br>
+{{ proj.desc }}<br><br>
+<b>Tech:</b> {{ proj.tech }}<br>
+<a href="{{ proj.link }}">{{ proj.link }}</a>
+</div>
+{% endfor %}
+</div>
+
+<div class="section">
+<h2>Internships</h2>
+{% for intern in internships %}
+<div class="box">
+<strong>{{ intern.title }}</strong> - {{ intern.org }}<br>
+{{ intern.duration }}<br><br>
+{{ intern.desc }}
+</div>
+{% endfor %}
+</div>
+
+<div class="section">
+<h2>Certifications</h2>
+{% for cert in certifications %}
+<div class="box">
+<strong>{{ cert.name }}</strong><br>
+{{ cert.org }} ({{ cert.date }})
+</div>
+{% endfor %}
+</div>
+
+<div class="section">
+<h2>Achievements</h2>
+<p>{{ achievements }}</p>
+</div>
+
+<div class="section">
+<h2>Hobbies</h2>
+<p>{{ hobbies }}</p>
+</div>
+
+</div>
+</div>
+
+<div class="buttons">
+
+<form action="{{ url_for('edit_freshers') }}" method="POST">
+
+<input type="hidden" name="photo" value="{{ photo }}">
+
+<input type="hidden" name="name" value="{{ basic.name }}">
+<input type="hidden" name="email" value="{{ basic.email }}">
+<input type="hidden" name="phone" value="{{ basic.phone }}">
+<input type="hidden" name="address" value="{{ basic.address }}">
+<input type="hidden" name="linkedin" value="{{ basic.linkedin }}">
+<input type="hidden" name="github" value="{{ basic.github }}">
+<input type="hidden" name="objective" value="{{ basic.objective }}">
+
+{% for edu in education %}
+<input type="hidden" name="degree{{ loop.index }}" value="{{ edu.degree }}">
+<input type="hidden" name="college{{ loop.index }}" value="{{ edu.college }}">
+<input type="hidden" name="grad_year{{ loop.index }}" value="{{ edu.year }}">
+<input type="hidden" name="percentage{{ loop.index }}" value="{{ edu.percentage }}">
+<input type="hidden" name="edu_duration{{ loop.index }}" value="{{ edu.duration }}">
+{% endfor %}
+
+<input type="hidden" name="technical_skills" value="{{ technical }}">
+<input type="hidden" name="soft_skills" value="{{ soft }}">
+
+{% for proj in projects %}
+<input type="hidden" name="proj_title{{ loop.index }}" value="{{ proj.title }}">
+<input type="hidden" name="proj_desc{{ loop.index }}" value="{{ proj.desc }}">
+<input type="hidden" name="proj_tech{{ loop.index }}" value="{{ proj.tech }}">
+<input type="hidden" name="proj_link{{ loop.index }}" value="{{ proj.link }}">
+{% endfor %}
+
+{% for intern in internships %}
+<input type="hidden" name="intern_title{{ loop.index }}" value="{{ intern.title }}">
+<input type="hidden" name="intern_org{{ loop.index }}" value="{{ intern.org }}">
+<input type="hidden" name="intern_duration{{ loop.index }}" value="{{ intern.duration }}">
+<input type="hidden" name="intern_desc{{ loop.index }}" value="{{ intern.desc }}">
+{% endfor %}
+
+{% for cert in certifications %}
+<input type="hidden" name="cert_name{{ loop.index }}" value="{{ cert.name }}">
+<input type="hidden" name="cert_org{{ loop.index }}" value="{{ cert.org }}">
+<input type="hidden" name="cert_date{{ loop.index }}" value="{{ cert.date }}">
+{% endfor %}
+
+
+<input type="hidden" name="ach_desc1" value="{{ achievements }}">
+<input type="hidden" name="hobbies" value="{{ hobbies }}">
+
+<button type="submit">Edit Resume</button>
+<button type="button" onclick="window.print()">Print Resume</button>
+
+</form>
+
+</body>
+</html>
