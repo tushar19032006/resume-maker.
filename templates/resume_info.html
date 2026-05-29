@@ -1,312 +1,332 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Resume Guide</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resume Guide</title>
 
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
 
-<style>
-.info-container{
-    display:flex;
-    max-width:1300px;
-    margin:40px auto;
-    gap:30px;
-    padding:20px;
-}
+    <style>
+      .info-container {
+        display: flex;
+        max-width: 1300px;
+        margin: 40px auto;
+        gap: 30px;
+        padding: 20px;
+      }
 
-/* LEFT MENU */
-.left-menu{
-    width:28%;
-    display:flex;
-    flex-direction:column;
-    gap:15px;
-}
+      /* LEFT MENU */
+      .left-menu {
+        width: 28%;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
 
-.topic-card{
-    background:white;
-    padding:18px;
-    border-radius:15px;
-    cursor:pointer;
-    box-shadow:0 5px 15px rgba(0,0,0,0.08);
-    transition:.3s;
-    border-left:5px solid #ff7a18;
-}
+      .topic-card {
+        background: white;
+        padding: 18px;
+        border-radius: 15px;
+        cursor: pointer;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        transition: 0.3s;
+        border-left: 5px solid #ff7a18;
+      }
 
-.topic-card:hover,
-.topic-card.active{
-    transform:translateX(5px);
-    background:linear-gradient(90deg,#ff7a18,#ff3d77);
-    color:white;
-}
+      .topic-card:hover,
+      .topic-card.active {
+        transform: translateX(5px);
+        background: linear-gradient(90deg, #ff7a18, #ff3d77);
+        color: white;
+      }
 
-/* RIGHT CONTENT */
-.right-content{
-    width:72%;
-    background:white;
-    padding:35px;
-    border-radius:18px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.08);
-    min-height:600px;
-}
+      /* RIGHT CONTENT */
+      .right-content {
+        width: 72%;
+        background: white;
+        padding: 35px;
+        border-radius: 18px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        min-height: 600px;
+      }
 
-.content-box{
-    display:none;
-    animation:fade .4s ease;
-}
+      .content-box {
+        display: none;
+        animation: fade 0.4s ease;
+      }
 
-.content-box.active{
-    display:block;
-}
+      .content-box.active {
+        display: block;
+      }
 
-.content-box h2{
-    margin-bottom:18px;
-    color:#333;
-    border-bottom:2px solid #ff7a18;
-    padding-bottom:8px;
-}
+      .content-box h2 {
+        margin-bottom: 18px;
+        color: #333;
+        border-bottom: 2px solid #ff7a18;
+        padding-bottom: 8px;
+      }
 
-.content-box p,
-.content-box li{
-    line-height:1.8;
-    color:#555;
-}
+      .content-box p,
+      .content-box li {
+        line-height: 1.8;
+        color: #555;
+      }
 
-.content-box ul{
-    padding-left:20px;
-}
+      .content-box ul {
+        padding-left: 20px;
+      }
 
-@keyframes fade{
-    from{opacity:0;transform:translateY(20px);}
-    to{opacity:1;transform:translateY(0);}
-}
+      @keyframes fade {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
 
-@media(max-width:900px){
-    .info-container{
-        flex-direction:column;
-    }
+      @media (max-width: 900px) {
+        .info-container {
+          flex-direction: column;
+        }
 
-    .left-menu,
-    .right-content{
-        width:100%;
-    }
-}
+        .left-menu,
+        .right-content {
+          width: 100%;
+        }
+      }
 
-/* =========================
+      /* =========================
    MOBILE PHONES
 ========================= */
 
-@media(max-width:768px){
+      @media (max-width: 768px) {
+        .info-container {
+          padding: 15px;
+          gap: 20px;
+        }
 
-    .info-container{
-        padding:15px;
-        gap:20px;
-    }
+        .left-menu {
+          gap: 12px;
+        }
 
-    .left-menu{
-        gap:12px;
-    }
+        .topic-card {
+          padding: 15px;
+          font-size: 15px;
+        }
 
-    .topic-card{
-        padding:15px;
-        font-size:15px;
-    }
+        .right-content {
+          padding: 20px;
+          min-height: auto;
+        }
 
-    .right-content{
-        padding:20px;
-        min-height:auto;
-    }
+        .content-box h2 {
+          font-size: 24px;
+        }
 
-    .content-box h2{
-        font-size:24px;
-    }
+        .content-box p,
+        .content-box li {
+          font-size: 15px;
+          line-height: 1.7;
+        }
 
-    .content-box p,
-    .content-box li{
-        font-size:15px;
-        line-height:1.7;
-    }
+        .content-box ul {
+          padding-left: 18px;
+        }
+      }
 
-    .content-box ul{
-        padding-left:18px;
-    }
-}
-
-
-/* =========================
+      /* =========================
    SMALL MOBILE DEVICES
 ========================= */
 
-@media(max-width:480px){
+      @media (max-width: 480px) {
+        .info-container {
+          padding: 10px;
+        }
 
-    .info-container{
-        padding:10px;
-    }
+        .topic-card {
+          padding: 12px;
+          font-size: 14px;
+          border-radius: 12px;
+        }
 
-    .topic-card{
-        padding:12px;
-        font-size:14px;
-        border-radius:12px;
-    }
+        .right-content {
+          padding: 15px;
+          border-radius: 14px;
+        }
 
-    .right-content{
-        padding:15px;
-        border-radius:14px;
-    }
+        .content-box h2 {
+          font-size: 20px;
+        }
 
-    .content-box h2{
-        font-size:20px;
-    }
-
-    .content-box p,
-    .content-box li{
-        font-size:14px;
-    }
-}
-
-</style>
-</head>
-<body>
-
-<!-- NAVBAR -->
-<nav class="navbar">
-    <div class="logo">
+        .content-box p,
+        .content-box li {
+          font-size: 14px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+      <div class="logo">
         <h2>RESUME MAKER</h2>
-    </div>
+      </div>
 
-    <div class="menutoggle" onclick="toggleMenu()">
-    ☰
-    </div>
+      <div class="menutoggle" onclick="toggleMenu()">☰</div>
 
-    <div class="nav-links" id="nav-links">
+      <div class="nav-links" id="nav-links">
         <ul>
-            <li><a href="{{ url_for('home') }}">Home</a></li>
-            <li><a href="{{ url_for('resume_info') }}">Resume</a></li>
-            <li><a href="{{ url_for('cv_info') }}">CV</a></li>
+          <li><a href="{{ url_for('home') }}">Home</a></li>
+          <li><a href="{{ url_for('resume_info') }}">Resume</a></li>
+          <li><a href="{{ url_for('cv_info') }}">CV</a></li>
         </ul>
-    </div>
-</nav>
+      </div>
+    </nav>
 
-<div class="info-container">
-
-    <!-- LEFT -->
-    <div class="left-menu">
-
+    <div class="info-container">
+      <!-- LEFT -->
+      <div class="left-menu">
         <div class="topic-card active" onclick="showContent(0)">
-            What is Resume?
+          What is Resume?
         </div>
 
-        <div class="topic-card" onclick="showContent(1)">
-            Resume Types
-        </div>
+        <div class="topic-card" onclick="showContent(1)">Resume Types</div>
 
-        <div class="topic-card" onclick="showContent(2)">
-            Resume Rules
-        </div>
+        <div class="topic-card" onclick="showContent(2)">Resume Rules</div>
 
         <div class="topic-card" onclick="showContent(3)">
-            Common Mistakes
+          Common Resume Mistakes
         </div>
 
         <div class="topic-card" onclick="showContent(4)">
-            Make Impressive Resume
+          Make Impressive Resume
         </div>
 
         <div class="topic-card" onclick="showContent(5)">
-            Why Resume Matters
+          Why Resume Matters
         </div>
+      </div>
 
-    </div>
-
-    <!-- RIGHT -->
-    <div class="right-content">
-
+      <!-- RIGHT -->
+      <div class="right-content">
         <div class="content-box active">
-            <h2>What is Resume?</h2>
-            <p>
-                Resume is a professional document that highlights your
-                education, projects, skills, certifications and work experience
-                to apply for jobs.
-            </p>
+          <h2>What is Resume?</h2>
+          <p>
+            Resume is a professional document that highlights your education,
+            projects, skills, certifications and work experience to apply for
+            jobs.
+            <br />
+            A resume is a simple document that tells employers about your
+            education, skills, experience, and achievements. It helps companies
+            understand who you are and why you are suitable for a job.
+          </p>
         </div>
 
         <div class="content-box">
-            <h2>Types of Resume</h2>
-            <ul>
-                <li><b>Chronological Resume</b> – Best for experienced candidates</li>
-                <li><b>Functional Resume</b> – Focus on skills</li>
-                <li><b>Combination Resume</b> – Mix of skills + experience</li>
-                <li><b>Fresher Resume</b> – For students & graduates</li>
-            </ul>
+          <h2>Types of Resume</h2>
+          <ul>
+            <li>
+              <b>Chronological Resume</b> – This type of resume shows your
+              education and work experience from latest to oldest. It is
+              commonly used by experienced professionals.
+            </li>
+            <li>
+              <b>Functional Resume</b> – A functional resume focuses more on
+              skills and abilities instead of job experience. It is useful for
+              freshers or people changing careers.
+            </li>
+            <li>
+              <b>Combination Resume</b> – This resume is a mix of skills and
+              work experience. It gives equal importance to both.
+            </li>
+            <li>
+              <b>Fresher Resume</b> – A fresher resume is not a type of
+              resume,but it is made for students or beginners who have little or
+              no work experience. It mainly highlights education, skills, and
+              projects.
+            </li>
+          </ul>
         </div>
 
         <div class="content-box">
-            <h2>Resume Rules</h2>
-            <ul>
-                <li>Keep 1–2 pages</li>
-                <li>Professional font</li>
-                <li>Clean layout</li>
-                <li>Use bullet points</li>
-                <li>Proofread properly</li>
-            </ul>
+          <h2>Resume Rules</h2>
+          <ul>
+            <li>Keep the resume clean and easy to read</li>
+            <li>Use simple and professional formatting</li>
+            <li>Add only important and relevant details</li>
+            <li>Check spelling and grammar carefully</li>
+            <li>Organize information properly with headings</li>
+            <li>Keep the content short and clear</li>
+            <li>Keep 1–2 pages</li>
+            <li>Professional font</li>
+            <li>Clean layout</li>
+            <li>Use bullet points</li>
+            <li>Proofread properly</li>
+          </ul>
         </div>
 
         <div class="content-box">
-            <h2>Common Mistakes</h2>
-            <ul>
-                <li>Spelling mistakes</li>
-                <li>Too many colors</li>
-                <li>Fake details</li>
-                <li>Long paragraphs</li>
-                <li>Irrelevant info</li>
-            </ul>
+          <h2>Common Resume Mistakes</h2>
+          <ul>
+            <li>Making spelling or grammar mistakes</li>
+            <li>Using poor formatting or messy design</li>
+            <li>Adding false or incorrect details</li>
+            <li>Making the resume too long</li>
+            <li>Writing too much unnecessary information</li>
+            <li>Using unprofessional email IDs</li>
+            <li>Not customizing the resume for the job role</li>
+          </ul>
         </div>
 
         <div class="content-box">
-            <h2>How to Make Impressive Resume</h2>
-            <ul>
-                <li>Write strong summary</li>
-                <li>Add measurable achievements</li>
-                <li>Highlight technical skills</li>
-                <li>Customize for job role</li>
-                <li>Use professional design</li>
-            </ul>
+          <h2>How to Make Impressive Resume</h2>
+          <ul>
+            <li>Write a clear career objective</li>
+            <li>Use simple and confident language</li>
+            <li>Highlight your important skills</li>
+            <li>Update the resume according to the job role</li>
+            <li>Customize for job role</li>
+            <li>Add measurable achievements</li>
+            <li>Use a neat and professional design</li>
+            <li>Add projects, certifications, and experience</li>
+          </ul>
         </div>
 
         <div class="content-box">
-            <h2>Why Resume Matters?</h2>
-            <p>
-                Resume creates first impression before interview.
-                A strong professional resume increases recruiter response
-                and improves job opportunities.
-            </p>
+          <h2>Why Resume Matters?</h2>
+          <p>
+            A resume is important because it creates the first impression on
+            employers. It helps companies quickly understand your skills,
+            qualifications, and abilities. A good resume can increase your
+            chances of getting selected for interviews and job opportunities.
+          </p>
         </div>
-
+      </div>
     </div>
 
-</div>
+    <script>
+      function toggleMenu() {
+        let menu = document.getElementById("nav-links");
+        menu.classList.toggle("show");
+      }
 
-<script>
+      function showContent(index) {
+        let cards = document.querySelectorAll(".topic-card");
+        let content = document.querySelectorAll(".content-box");
 
-function toggleMenu(){
-    let menu=document.getElementById("nav-links");
-    menu.classList.toggle("show");
-}
+        cards.forEach((card) => card.classList.remove("active"));
+        content.forEach((box) => box.classList.remove("active"));
 
-
-function showContent(index){
-
-    let cards=document.querySelectorAll('.topic-card');
-    let content=document.querySelectorAll('.content-box');
-
-    cards.forEach(card=>card.classList.remove('active'));
-    content.forEach(box=>box.classList.remove('active'));
-
-    cards[index].classList.add('active');
-    content[index].classList.add('active');
-}
-</script>
-
-</body>
+        cards[index].classList.add("active");
+        content[index].classList.add("active");
+      }
+    </script>
+  </body>
 </html>
